@@ -1,9 +1,11 @@
+import 'package:barcode_painter_demo/alignment_demo.dart';
+import 'package:flutter/material.dart';
+
 import 'package:barcode_painter_demo/barcode39/barcode_39_examples.dart';
 import 'package:barcode_painter_demo/barcode93/barcode_93_examples.dart';
 import 'package:barcode_painter_demo/common/barcode_card_view.dart';
 import 'package:barcode_painter_demo/common/barcode_example_dto.dart';
 import 'package:barcode_painter_demo/common/placeholder_widget.dart';
-import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Barcode Painter Examples',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: LandingPage(title: 'Barcode Painter Examples'),
     );
@@ -54,37 +56,22 @@ class _MyLandingPageState extends State<LandingPage> with SingleTickerProviderSt
           unselectedLabelColor: Colors.white.withOpacity(0.3),
           indicatorColor: Colors.white,
           tabs: <Widget>[
-            Tab(
-              child: Text("Home"),
-            ),
-            Tab(
-              child: Text("Code 39"),
-            ),
-            Tab(
-              child: Text("Code 93"),
-            ),
-            Tab(
-              child: Text("Code 128"),
-            ),
-            Tab(
-              child: Text("EAN 8"),
-            ),
-            Tab(
-              child: Text("EAN 13"),
-            ),
-            Tab(
-              child: Text("UPC A"),
-            ),
-            Tab(
-              child: Text("UPC E"),
-            ),
+            Tab(child: Text("Alignment")),
+            Tab(child: Text("Code 39")),
+            Tab(child: Text("Code 93")),
+            Tab(child: Text("Code 128")),
+            Tab(child: Text("EAN 8")),
+            Tab(child: Text("EAN 13")),
+            Tab(child: Text("UPC A")),
+            Tab(child: Text("UPC E")),
           ],
         ),
       ),
       body: TabBarView(
         controller: _controller,
         children: [
-          PlaceholderWidget("Hello"),
+          AlignmentDemo(),
+          //_buildRawList(key: "rawcode39", data: Barcode39Examples.data),
           _buildList(key: "Code39", data: Barcode39Examples.data),
           _buildList(key: "Code93", data: Barcode93Examples.data),
           PlaceholderWidget("Coming soon..."),
@@ -96,6 +83,21 @@ class _MyLandingPageState extends State<LandingPage> with SingleTickerProviderSt
       ),
     );
   }
+
+  // Widget _buildRawList({String key, List<BarcodeExampleDTO> data}) {
+  //   return ListView.builder(
+  //     key: PageStorageKey(key),
+  //     itemCount: data.length,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return Container(
+  //         decoration: BoxDecoration(border: Border.all()),
+  //         child: BarcodePainter(
+  //           barcode: data[index].barcode,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   Widget _buildList({String key, List<BarcodeExampleDTO> data}) {
     return Container(

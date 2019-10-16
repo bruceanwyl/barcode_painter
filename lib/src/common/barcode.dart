@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 typedef void BarcodeError(dynamic error);
 
+enum BarcodeAlignment { start, center, end }
+
+// enum VerticalAlignment { start, center, end }
+
 /// The base class for painting barcodes.
 ///
 /// This class is abstract, while extending CustomPainter so that subclasses

@@ -68,8 +68,8 @@ class BarcodeCardView extends StatelessWidget {
                   // the right hand side of its containing Widget.
                   //
                   Expanded(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
+                    child: Container(
+                      // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
                       child: BarcodePainter(
                         barcode: data.barcode,
                       ),

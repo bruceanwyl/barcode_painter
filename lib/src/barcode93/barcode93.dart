@@ -66,6 +66,9 @@ class Barcode93 extends Barcode {
   @override
   String get lastErrorMessage => this._code93Core.lastErrorMessage;
 
+  final BarcodeAlignment horizontalAlignment;
+  final BarcodeAlignment verticalAlignment;
+
   /// Creates a CustomPainter that can paint a Code93 format barcode.
   Barcode93({
     this.data,
@@ -76,6 +79,8 @@ class Barcode93 extends Barcode {
     this.showText = false,
     this.fontSize = 15.0,
     this.onError,
+    this.horizontalAlignment = BarcodeAlignment.start,
+    this.verticalAlignment = BarcodeAlignment.start,
   }) : super(height: height) {
     // This is the canvas width required to render the barcode data
     // using the requested lineWidth.
@@ -85,11 +90,31 @@ class Barcode93 extends Barcode {
     _code93Core = Barcode93Core(data);
   }
 
+  /// Paints the barcode.
   @override
   void paint(Canvas canvas, Size size) {
     Paint painter = Paint()..style = PaintingStyle.fill;
-
     double scaledLineWidth = lineWidth;
+    double lineLeft = 0.0;
+    double paintStart = 0.0;
+    double paintWidth = size.width;
+    double lineTop = 0.0;
+
+    if (height < size.height) {
+      // we need to align the barcode vertically
+      switch (verticalAlignment) {
+        case BarcodeAlignment.start:
+          lineTop = 0.0;
+          break;
+        case BarcodeAlignment.center:
+          lineTop = (size.height - height) / 2.0;
+          break;
+        case BarcodeAlignment.end:
+          lineTop = size.height - height;
+          break;
+      }
+    }
+
     if (_preferredWidth > size.width) {
       //
       // If the size of our container is less than our preferred width,
@@ -98,16 +123,33 @@ class Barcode93 extends Barcode {
       //
       scaledLineWidth = lineWidth * size.width / _preferredWidth;
     }
-    //
-    // Now we can fill the area to be painted with the backgroundColor.
-    //
-    Rect rect = Rect.fromLTWH(0.0, 0.0, size.width, size.height);
-    painter.color = this.backgroundColor;
-    canvas.drawRect(rect, painter);
+    if (_preferredWidth < size.width) {
+      //
+      // We will only paint to the preferred width and take into account
+      // the alignment parameters.
+      switch (horizontalAlignment) {
+        case BarcodeAlignment.start:
+          // actually nothing to do for this one
+          break;
+        case BarcodeAlignment.center:
+          paintStart = (size.width - _preferredWidth) / 2.0;
+          break;
+        case BarcodeAlignment.end:
+          paintStart = size.width - _preferredWidth;
+          break;
+      }
+      paintWidth = _preferredWidth;
+    }
 
     if (_code93Core.hasError) {
       // we might do something here in the future
     } else {
+      //
+      // Now we can fill the area to be painted with the backgroundColor.
+      //
+      Rect rect = Rect.fromLTWH(paintStart, lineTop, paintWidth, height);
+      painter.color = this.backgroundColor;
+      canvas.drawRect(rect, painter);
       //
       // If we are showing the text below the barcode, we need reduce the bar
       // height by the amount of space taken by text of size [fontSize].
@@ -116,15 +158,13 @@ class Barcode93 extends Barcode {
       // We remove 20% of the fontSize value, to get similar spacing
       // above and below the text.
       //
-      double lineHeight = showText ? size.height - 1.2 * this.fontSize : size.height;
-
-      // Paint the barcode
+      double lineHeight = showText ? height - 1.2 * this.fontSize : height;
+      lineLeft = paintStart;
       painter.color = this.foregroundColor;
-      double lineLeft = 0.0;
       _code93Core.getLinesAsBool().forEach((printBarcode) {
         if (printBarcode) {
           canvas.drawRect(
-            Rect.fromLTWH(lineLeft, 0.0, scaledLineWidth, lineHeight),
+            Rect.fromLTWH(lineLeft, lineTop, scaledLineWidth, lineHeight),
             painter,
           );
         }
@@ -135,12 +175,13 @@ class Barcode93 extends Barcode {
       // Optionally, paint the barcode text
       if (showText) {
         // Reset our position to 2.5 barcode characters from the origin
-        // of the barcode.
+        // of the barcode. With alignment, this is additionally offset by
+        // the value of paintStart.
         // Remember that each Code93 barcode character consists of 9 bars and
         // there are two checksum characters as well.
         // All of this effort will space the text characters nicely as well as
         // aligning the center of the text with the center of the barcode.
-        double charCenter = scaledLineWidth * 9 * 2.5;
+        double charCenter = scaledLineWidth * 9 * 2.5 + paintStart;
         TextStyle textStyle = TextStyle(
           color: this.foregroundColor,
           fontSize: this.fontSize,
@@ -158,7 +199,7 @@ class Barcode93 extends Barcode {
           //  ... and offset the character to the left by half of its width so
           //      that it is neatly centered underneath the barcode character.
           double dx = charCenter - minIntrinsicWidth / 2.0;
-          textPainter.paint(canvas, Offset(dx, lineHeight));
+          textPainter.paint(canvas, Offset(dx, lineTop + lineHeight));
           // move to the center of the next character position
           charCenter += 9 * scaledLineWidth;
         }

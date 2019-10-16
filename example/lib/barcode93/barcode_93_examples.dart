@@ -3,10 +3,6 @@ import 'package:barcode_painter_demo/common/barcode_example_dto.dart';
 import 'package:flutter/material.dart';
 
 class Barcode93Examples {
-//
-  // Note that hot reload has no effect if you change the data here.
-  // You need to reload the app.
-  //
   static List<BarcodeExampleDTO> data = [
     BarcodeExampleDTO(
       "Code 93",
@@ -65,7 +61,7 @@ class Barcode93Examples {
         fontSize: 20.0,
         foregroundColor: Colors.red,
         backgroundColor: Colors.yellow,
-        height: 60,
+        height: 60.0,
       ),
     ),
     BarcodeExampleDTO(
@@ -81,7 +77,15 @@ class Barcode93Examples {
     ),
     BarcodeExampleDTO(
       "Code 93",
-      "Small barcode with text. Line width is set to 1.0 (default is 2.0)",
+      [
+        "Small value and showing the barcode data as text underneath the bars.",
+        "Line width is set to 1.0 (default is 2.0)",
+        "",
+        "As in this case, when a barcode is not as wide as its canvas," +
+            "it will be positioned on the canvas according to its horizontal alignment",
+        "",
+        "horizontalAlignment=left (the default)",
+      ].join("\n"),
       Barcode93(
         data: "BARCODE93",
         lineWidth: 1.0,
@@ -90,7 +94,27 @@ class Barcode93Examples {
     ),
     BarcodeExampleDTO(
       "Code 93",
-      "The data for this example (BaRCODE93) contains a lower case character.\nThis is not valid for basic Code 93 so...\n\nbarcode.hasError = true;\n\nThe background color is yellow to demonstrate that the painter still renders the canvas, but without bars or text.\n\nThe value of barcode.lastErrorMessage is shown below the canvas.",
+      "As above, horizontalAlignment=center",
+      Barcode93(
+        data: "BARCODE93",
+        lineWidth: 1.0,
+        showText: true,
+        horizontalAlignment: BarcodeAlignment.center,
+      ),
+    ),
+    BarcodeExampleDTO(
+      "Code 93",
+      "As above, horizontalAlignment=end",
+      Barcode93(
+        data: "BARCODE93",
+        lineWidth: 1.0,
+        showText: true,
+        horizontalAlignment: BarcodeAlignment.end,
+      ),
+    ),
+    BarcodeExampleDTO(
+      "Code 93",
+      "The data for this example (BaRCODE93) contains a lower case character.\nThis is not valid for basic Code 93 so...\n\nbarcode.hasError = true;\n\nFor the purpose of this example, the value of barcode.lastErrorMessage is shown both on and below the canvas.\n\nHave a look at the code for BarcodePainter to see how the error is shown on the canvas.",
       Barcode93(
         data: "BaRCODE93",
         backgroundColor: Colors.yellow,

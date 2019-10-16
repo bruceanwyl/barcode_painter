@@ -77,7 +77,15 @@ class Barcode39Examples {
     ),
     BarcodeExampleDTO(
       "Code 39",
-      "Small barcode with text. Line width is set to 1.0 (default is 2.0)",
+      [
+        "Small value and showing the barcode data as text underneath the bars.",
+        "Line width is set to 1.0 (default is 2.0)",
+        "",
+        "As in this case, when a barcode is not as wide as its canvas," +
+            "it will be positioned on the canvas according to its horizontal alignment",
+        "",
+        "horizontalAlignment=left (the default)",
+      ].join("\n"),
       Barcode39(
         data: "BARCODE39",
         lineWidth: 1.0,
@@ -86,7 +94,27 @@ class Barcode39Examples {
     ),
     BarcodeExampleDTO(
       "Code 39",
-      "The data for this example (BARCoDE39) contains a lower case character.\nThis is not valid for basic Code 39 so...\n\nbarcode.hasError = true;\n\nThe background color is yellow to demonstrate that the painter still renders the canvas, but without bars or text.\n\nThe value of barcode.lastErrorMessage is shown below the canvas.",
+      "As above, horizontalAlignment=center",
+      Barcode39(
+        data: "BARCODE39",
+        lineWidth: 1.0,
+        showText: true,
+        horizontalAlignment: BarcodeAlignment.center,
+      ),
+    ),
+    BarcodeExampleDTO(
+      "Code 39",
+      "As above, horizontalAlignment=end",
+      Barcode39(
+        data: "BARCODE39",
+        lineWidth: 1.0,
+        showText: true,
+        horizontalAlignment: BarcodeAlignment.end,
+      ),
+    ),
+    BarcodeExampleDTO(
+      "Code 39",
+      "The data for this example (BARCoDE39) contains a lower case character.\nThis is not valid for basic Code 39 so...\n\nbarcode.hasError = true;\n\nFor the purpose of this example, the value of barcode.lastErrorMessage is shown both on and below the canvas.\n\nHave a look at the code for BarcodePainter to see how the error is shown on the canvas.",
       Barcode39(
         data: "BARCoDE39",
         backgroundColor: Colors.yellow,
