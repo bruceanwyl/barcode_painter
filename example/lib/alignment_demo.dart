@@ -106,7 +106,7 @@ class _AlignmentDemoState extends State<AlignmentDemo> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 0.0),
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                         child: Text(
                           "Horizontal",
                           textAlign: TextAlign.left,
@@ -120,37 +120,55 @@ class _AlignmentDemoState extends State<AlignmentDemo> {
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      MaterialButton(
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: Text("start"),
-                        onPressed: () {
-                          setState(() {
-                            _horizontalAlignment = BarcodeAlignment.start;
-                          });
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.format_align_left),
+                          padding: EdgeInsets.all(0.0),
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _horizontalAlignment = BarcodeAlignment.start;
+                            });
+                          },
+                        ),
                       ),
-                      MaterialButton(
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: Text("center"),
-                        onPressed: () {
-                          setState(() {
-                            _horizontalAlignment = BarcodeAlignment.center;
-                          });
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.format_align_center),
+                          padding: EdgeInsets.all(0.0),
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _horizontalAlignment = BarcodeAlignment.center;
+                            });
+                          },
+                        ),
                       ),
-                      MaterialButton(
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: Text("end"),
-                        onPressed: () {
-                          setState(() {
-                            _horizontalAlignment = BarcodeAlignment.end;
-                          });
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.format_align_right),
+                          padding: EdgeInsets.all(0.0),
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _horizontalAlignment = BarcodeAlignment.end;
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -158,7 +176,7 @@ class _AlignmentDemoState extends State<AlignmentDemo> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 0.0),
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                         child: Text(
                           "Vertical",
                           textAlign: TextAlign.left,
@@ -172,37 +190,52 @@ class _AlignmentDemoState extends State<AlignmentDemo> {
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      MaterialButton(
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: Text("start"),
-                        onPressed: () {
-                          setState(() {
-                            _verticalAlignment = BarcodeAlignment.start;
-                          });
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.vertical_align_top),
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _verticalAlignment = BarcodeAlignment.start;
+                            });
+                          },
+                        ),
                       ),
-                      MaterialButton(
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: Text("center"),
-                        onPressed: () {
-                          setState(() {
-                            _verticalAlignment = BarcodeAlignment.center;
-                          });
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.vertical_align_center),
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _verticalAlignment = BarcodeAlignment.center;
+                            });
+                          },
+                        ),
                       ),
-                      MaterialButton(
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: Text("end"),
-                        onPressed: () {
-                          setState(() {
-                            _verticalAlignment = BarcodeAlignment.end;
-                          });
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.vertical_align_bottom),
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              _verticalAlignment = BarcodeAlignment.end;
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),

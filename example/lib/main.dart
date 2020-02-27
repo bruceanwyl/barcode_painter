@@ -6,14 +6,22 @@ import 'package:barcode_painter_demo/barcode93/barcode_93_examples.dart';
 import 'package:barcode_painter_demo/common/barcode_card_view.dart';
 import 'package:barcode_painter_demo/common/barcode_example_dto.dart';
 import 'package:barcode_painter_demo/common/placeholder_widget.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  );
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Barcode Painter Examples',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
@@ -67,19 +75,21 @@ class _MyLandingPageState extends State<LandingPage> with SingleTickerProviderSt
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _controller,
-        children: [
-          AlignmentDemo(),
-          //_buildRawList(key: "rawcode39", data: Barcode39Examples.data),
-          _buildList(key: "Code39", data: Barcode39Examples.data),
-          _buildList(key: "Code93", data: Barcode93Examples.data),
-          PlaceholderWidget("Coming soon..."),
-          PlaceholderWidget("Coming soon..."),
-          PlaceholderWidget("Coming soon..."),
-          PlaceholderWidget("Coming soon..."),
-          PlaceholderWidget("Coming soon..."),
-        ],
+      body: SafeArea(
+        child: TabBarView(
+          controller: _controller,
+          children: [
+            AlignmentDemo(),
+            //_buildRawList(key: "rawcode39", data: Barcode39Examples.data),
+            _buildList(key: "Code39", data: Barcode39Examples.data),
+            _buildList(key: "Code93", data: Barcode93Examples.data),
+            PlaceholderWidget("Coming soon..."),
+            PlaceholderWidget("Coming soon..."),
+            PlaceholderWidget("Coming soon..."),
+            PlaceholderWidget("Coming soon..."),
+            PlaceholderWidget("Coming soon..."),
+          ],
+        ),
       ),
     );
   }
