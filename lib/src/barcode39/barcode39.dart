@@ -145,7 +145,8 @@ class Barcode39 extends Barcode {
     }
 
     if (_code39Core.hasError) {
-      // we might do something here in the future
+      // let the outside world know we have a problem with the data.
+      this.onError(_code39Core.lastErrorMessage);
     } else {
       //
       // Now we can fill the area to be painted with the backgroundColor.

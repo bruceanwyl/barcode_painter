@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-typedef void BarcodeError(dynamic error);
+typedef void BarcodeError(String errorMessage);
 
 enum BarcodeAlignment { start, center, end }
 
