@@ -143,7 +143,9 @@ class Barcode93 extends Barcode {
 
     if (_code93Core.hasError) {
       // let the outside world know we have a problem with the data.
-      this.onError(_code93Core.lastErrorMessage);
+      // this.onError(_code93Core.lastErrorMessage);
+      // This turns out to be a bad idea.
+      //TODO: remove it from the interface also.
     } else {
       //
       // Now we can fill the area to be painted with the backgroundColor.
