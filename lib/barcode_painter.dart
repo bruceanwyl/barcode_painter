@@ -8,4 +8,6 @@ library barcode_painter;
 export 'src/common/barcode_painter.dart';
 export 'src/common/barcode.dart';
 export 'src/barcode39/barcode39.dart';
+export 'src/barcode39/barcode39_core.dart';
 export 'src/barcode93/barcode93.dart';
+export 'src/barcode93/barcode93_core.dart';
