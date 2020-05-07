@@ -1,22 +1,23 @@
 import 'package:flutter/rendering.dart';
-import 'package:barcode_painter/src/common/barcode.dart';
-import 'package:barcode_painter/src/barcode39/barcode39_core.dart';
 
-/// A CustomPainter that represents a basic Code39 barcode
+import '../common/barcode_painter.dart';
+import 'code_39.dart';
+
+/// A CustomPainter that can paint a basic Code39 barcode
 /// as defined in https://en.wikipedia.org/wiki/Code_39
 ///
-/// You can use it in its simplest form as follows
+/// You can use [Code39Painter] in its simplest form as follows
 /// ```Dart
-///        Container(
-///        child: BarcodePainter(
-///          barcode: Barcode39(
+///      Container(
+///        child: BarcodeCanvas(
+///          painter: Code39Painter(
 ///            data: "62733538535715976",
 ///            showText: true,
 ///          ),
 ///        ),
 ///      ),
 /// ```
-class Barcode39 extends Barcode {
+class Code39Painter extends BarcodePainter {
   /// The value of the barcode that would be read by a barcode scanner.
   final String data;
 
@@ -57,11 +58,11 @@ class Barcode39 extends Barcode {
   /// Indicates whether or not an error occurred while creating the barcode
   /// from the data provided as a value.
   @override
-  bool get hasError => this._code39Core.hasError;
+  bool get hasError => this._code39.hasError;
 
   /// A description of the most recent error encountered.
   @override
-  String get lastErrorMessage => this._code39Core.lastErrorMessage;
+  String get lastErrorMessage => this._code39.lastErrorMessage;
 
   /// If the canvas is wider than the barcode then it will be positioned
   /// horizontally on the canvas based on the value of horizontalAlignment.
@@ -72,7 +73,7 @@ class Barcode39 extends Barcode {
   final BarcodeAlignment verticalAlignment;
 
   /// Creates a CustomPainter that can paint a Code39 format barcode.
-  Barcode39({
+  Code39Painter({
     this.data,
     this.lineWidth = 2.0,
     double height = 100.0,
@@ -90,7 +91,7 @@ class Barcode39 extends Barcode {
     // and a one line space between all characters but no trailing space
     // after the last character.
     _preferredWidth = (data.length + 2) * 13 * lineWidth - lineWidth;
-    _code39Core = BarCode39Core(this.data);
+    _code39 = Code39(this.data);
   }
 
   /// Paints the barcode.
@@ -144,9 +145,9 @@ class Barcode39 extends Barcode {
       paintWidth = _preferredWidth;
     }
 
-    if (_code39Core.hasError) {
+    if (_code39.hasError) {
       // let the outside world know we have a problem with the data.
-      //this.onError(_code39Core.lastErrorMessage);
+      //this.onError(_code39.lastErrorMessage);
       // This turns out to be a bad idea.
       //TODO: remove it from the interface also.
     } else {
@@ -161,14 +162,14 @@ class Barcode39 extends Barcode {
       // height by the amount of space taken by text of size [fontSize].
       // Thus we will have space below the barcode, and within the canvas,
       // where we can print the text.
-      // We remove 20% of the fontSize value, to get similar spacing
-      // above and below the text.
+      // We remove an additional 20% of the fontSize value, to get similar
+      // spacing above and below the text.
       //
       double lineHeight = showText ? height - 1.2 * this.fontSize : height;
       lineLeft = paintStart;
       // Paint the barcode
       painter.color = this.foregroundColor;
-      _code39Core.getLinesAsBool().forEach((printSolidBarcodeLine) {
+      _code39.getLinesAsBool().forEach((printSolidBarcodeLine) {
         if (printSolidBarcodeLine) {
           canvas.drawRect(
             Rect.fromLTWH(lineLeft, lineTop, scaledLineWidth, lineHeight),
@@ -214,7 +215,8 @@ class Barcode39 extends Barcode {
     }
   }
 
-  /// Always returns false for this implementation because the data cannot change.
+  /// Always returns false for this implementation because
+  /// the data cannot change.
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
@@ -224,5 +226,5 @@ class Barcode39 extends Barcode {
   // private attributes and methods
   //
   double _preferredWidth;
-  BarCode39Core _code39Core;
+  Code39 _code39;
 }

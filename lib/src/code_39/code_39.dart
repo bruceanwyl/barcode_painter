@@ -4,7 +4,7 @@ import 'package:barcode_painter/src/common/bar_encoding_dto.dart';
 ///   * List of bool as a left to right representation of barcode lines.
 ///       * true represents a black barcode line
 ///       * false represents a white barcode line
-class BarCode39Core {
+class Code39 {
   final String data;
 
   BarEncodingDTO get encodedStartCharacter => _startEncoding;
@@ -26,7 +26,7 @@ class BarCode39Core {
 
   List<bool> getLinesAsBool() => _getLinesAsBool();
 
-  BarCode39Core(this.data) {
+  Code39(this.data) {
     _buildBarcodeTable();
   }
 
@@ -43,7 +43,8 @@ class BarCode39Core {
       String key = data[j];
       dto = getCharacterEncoding(key);
       if (dto == null) {
-        _lastErrorMessage = "Failed to find a Code39 encoding for the character [$key]";
+        _lastErrorMessage =
+            "Failed to find a Code39 encoding for the character [$key]";
         _hasError = true;
         _barcode = [];
         return;

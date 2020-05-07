@@ -26,12 +26,14 @@ class _AlignmentDemoState extends State<AlignmentDemo> {
         child: Padding(
           padding: const EdgeInsets.only(top: 0.0),
           child: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0)),
             elevation: 2.0,
             margin: EdgeInsets.only(bottom: 16.0),
             // color: Colors.blueGrey[50],
             child: Container(
-              padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 16.0),
+              padding: EdgeInsets.only(
+                  top: 16.0, left: 16.0, right: 16.0, bottom: 16.0),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -87,8 +89,8 @@ class _AlignmentDemoState extends State<AlignmentDemo> {
                           height: 150.0,
                           // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
                           color: Colors.black12,
-                          child: BarcodePainter(
-                            barcode: Barcode39(
+                          child: BarcodeCanvas(
+                            painter: Code39Painter(
                               height: 100.0,
                               data: "BARCODE39",
                               showText: true,

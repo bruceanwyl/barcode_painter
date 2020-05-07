@@ -12,12 +12,14 @@ class BarcodeCardView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 0.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
         elevation: 2.0,
         margin: EdgeInsets.only(bottom: 16.0),
         // color: Colors.blueGrey[50],
         child: Container(
-          padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 16.0),
+          padding:
+              EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 16.0),
           child: Column(
             children: <Widget>[
               Row(
@@ -70,8 +72,8 @@ class BarcodeCardView extends StatelessWidget {
                   Expanded(
                     child: Container(
                       // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-                      child: BarcodePainter(
-                        barcode: data.barcode,
+                      child: BarcodeCanvas(
+                        painter: data.barcode,
                       ),
                     ),
                   ),

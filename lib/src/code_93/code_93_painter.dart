@@ -1,25 +1,26 @@
-import 'package:barcode_painter/src/barcode93/barcode93_core.dart';
-import 'package:barcode_painter/src/common/barcode.dart';
 import 'package:flutter/rendering.dart';
 
+import '../common/barcode_painter.dart';
+import 'code_93.dart';
+
 /// A CustomPainter that represents a basic Code93 barcode
-/// as defined in /// https://en.wikipedia.org/wiki/Code_93#Detailed_Outline
+/// as defined in https://en.wikipedia.org/wiki/Code_93#Detailed_Outline
 ///
 /// The Full ASCII code version of Code93 described in
 /// https://en.wikipedia.org/wiki/Code_93#Full_ASCII_Code_93  is not implemented.
 ///
-/// You can use [Barcode93] in in its simplest form as follows
+/// You can use [Code93Painter] in in its simplest form as follows
 /// ```Dart
-///        Container(
-///        child: BarcodePainter(
-///          barcode: Barcode93(
+///      Container(
+///        child: BarcodeCanvas(
+///          painter: Code93Painter(
 ///            data: "62733538535715976",
 ///            showText: true,
 ///          ),
 ///        ),
 ///      ),
 /// ```
-class Barcode93 extends Barcode {
+class Code93Painter extends BarcodePainter {
   /// The value of the barcode that would be read by a barcode scanner.
   final String data;
 
@@ -60,17 +61,17 @@ class Barcode93 extends Barcode {
   /// Indicates whether or not an error occurred while creating the barcode
   /// from the data provided as a value.
   @override
-  bool get hasError => this._code93Core.hasError;
+  bool get hasError => this._code93.hasError;
 
   /// A description of the most recent error encountered.
   @override
-  String get lastErrorMessage => this._code93Core.lastErrorMessage;
+  String get lastErrorMessage => this._code93.lastErrorMessage;
 
   final BarcodeAlignment horizontalAlignment;
   final BarcodeAlignment verticalAlignment;
 
   /// Creates a CustomPainter that can paint a Code93 format barcode.
-  Barcode93({
+  Code93Painter({
     this.data,
     this.lineWidth = 2.0,
     double height = 100.0,
@@ -87,7 +88,7 @@ class Barcode93 extends Barcode {
     // We have data, stop and start characters and two checksum characters,
     // 9 lines per character and one extra solid bar at the end.
     _preferredWidth = (data.length + 4) * 9 * lineWidth + lineWidth;
-    _code93Core = Barcode93Core(data);
+    _code93 = Code93(data);
   }
 
   /// Paints the barcode.
@@ -141,7 +142,7 @@ class Barcode93 extends Barcode {
       paintWidth = _preferredWidth;
     }
 
-    if (_code93Core.hasError) {
+    if (_code93.hasError) {
       // let the outside world know we have a problem with the data.
       // this.onError(_code93Core.lastErrorMessage);
       // This turns out to be a bad idea.
@@ -158,13 +159,13 @@ class Barcode93 extends Barcode {
       // height by the amount of space taken by text of size [fontSize].
       // Thus we will have space below the barcode, and within the canvas,
       // where we can print the text.
-      // We remove 20% of the fontSize value, to get similar spacing
-      // above and below the text.
+      // We remove an additional 20% of the fontSize value, to get similar
+      // spacing above and below the text.
       //
       double lineHeight = showText ? height - 1.2 * this.fontSize : height;
       lineLeft = paintStart;
       painter.color = this.foregroundColor;
-      _code93Core.getLinesAsBool().forEach((printBarcode) {
+      _code93.getLinesAsBool().forEach((printBarcode) {
         if (printBarcode) {
           canvas.drawRect(
             Rect.fromLTWH(lineLeft, lineTop, scaledLineWidth, lineHeight),
@@ -210,7 +211,8 @@ class Barcode93 extends Barcode {
     }
   }
 
-  /// Always returns false for this implementation because the data cannot change.
+  /// Always returns false for this implementation because
+  /// the data cannot change.
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
@@ -220,5 +222,5 @@ class Barcode93 extends Barcode {
   // private attributes and methods
   //
   double _preferredWidth;
-  Barcode93Core _code93Core;
+  Code93 _code93;
 }

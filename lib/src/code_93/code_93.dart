@@ -1,10 +1,10 @@
-import 'package:barcode_painter/src/common/bar_encoding_dto.dart';
+import '../common/bar_encoding_dto.dart';
 
 /// Takes a String value on construction and encodes it into a:
 ///   * List of bool as a left to right representation of barcode lines.
 ///       * true represents a black barcode line
 ///       * false represents a white barcode line
-class Barcode93Core {
+class Code93 {
   final String data;
 
   BarEncodingDTO get encodedStartCharacter => _startEncoding;
@@ -37,7 +37,7 @@ class Barcode93Core {
 
   List<bool> getLinesAsBool() => _getLinesAsBool();
 
-  Barcode93Core(this.data) {
+  Code93(this.data) {
     _buildBarcodeTable();
   }
 
@@ -56,7 +56,8 @@ class Barcode93Core {
       String key = data[j];
       dto = getCharacterEncoding(key);
       if (dto == null) {
-        _lastErrorMessage = "Failed to find a Code93 encoding for the character [$key]";
+        _lastErrorMessage =
+            "Failed to find a Code93 encoding for the character [$key]";
         _hasError = true;
         _barcodeTable = [];
         return;
@@ -68,7 +69,8 @@ class Barcode93Core {
     int checksumC = _checkSumC();
     dto = _getEncodingForValue(checksumC);
     if (dto == null) {
-      _lastErrorMessage = "Failed to find a Code93 encoding for the checksum 'C' value [$checksumC]";
+      _lastErrorMessage =
+          "Failed to find a Code93 encoding for the checksum 'C' value [$checksumC]";
       _hasError = true;
       _barcodeTable = [];
       return;
@@ -79,7 +81,8 @@ class Barcode93Core {
     int checksumK = _checkSumK();
     dto = _getEncodingForValue(checksumK);
     if (dto == null) {
-      _lastErrorMessage = "Failed to find a Code93 encoding for the checksum 'K' value [$checksumK]";
+      _lastErrorMessage =
+          "Failed to find a Code93 encoding for the checksum 'K' value [$checksumK]";
       _hasError = true;
       _barcodeTable = [];
       return;
@@ -134,7 +137,8 @@ class Barcode93Core {
       // Not expecting this to ever happen but...
       if (dto == null) {
         this._hasError = true;
-        this._lastErrorMessage = "Could not find a Code93 encoding for character=$character";
+        this._lastErrorMessage =
+            "Could not find a Code93 encoding for character=$character";
       }
 
       // generates a continuous sequence 1..20 followed by 1..20 etc etc
@@ -170,7 +174,8 @@ class Barcode93Core {
     // Not expecting this to ever happen but...
     if (dto == null) {
       this._hasError = true;
-      this._lastErrorMessage = "Could not find a Code93 encoding with value=$checksum";
+      this._lastErrorMessage =
+          "Could not find a Code93 encoding with value=$checksum";
     }
     // generates a continuous sequence 1..15 followed by 1..15 etc etc
     weight = ++weight <= 15 ? weight : 1;
@@ -183,7 +188,8 @@ class Barcode93Core {
       // Not expecting this to ever happen but...
       if (dto == null) {
         this._hasError = true;
-        this._lastErrorMessage = "Could not find a Code93 encoding for character=$character";
+        this._lastErrorMessage =
+            "Could not find a Code93 encoding for character=$character";
       }
       // generates a continuous sequence 1..15 followed by 1..15 etc etc
       weight = ++weight <= 15 ? weight : 1;
@@ -282,10 +288,12 @@ class Barcode93Core {
   List<BarEncodingDTO> _barcodeTable = [];
 
   /// The start character for a Code93 barcode.
-  final BarEncodingDTO _startEncoding = BarEncodingDTO('*', 0x15e, 43); //  101011110;
+  final BarEncodingDTO _startEncoding =
+      BarEncodingDTO('*', 0x15e, 43); //  101011110;
 
   /// The stop character for a Code93 barcode.
-  final BarEncodingDTO _stopEncoding = BarEncodingDTO('*', 0x15e, 43); //  101011110
+  final BarEncodingDTO _stopEncoding =
+      BarEncodingDTO('*', 0x15e, 43); //  101011110
 
   // Value may change in _buildBarcodeTable() or during checksum calculations
   bool _hasError = false;

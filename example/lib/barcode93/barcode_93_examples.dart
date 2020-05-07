@@ -7,7 +7,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "Small value, default values for all settings.",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
       ),
     ),
@@ -17,7 +17,7 @@ class Barcode93Examples {
         "As above and showing the barcode data as text under the bars.",
         "Note how the height of the lines is reduced by the amount of space needed to show the text.",
       ].join("\n"),
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         showText: true,
       ),
@@ -25,7 +25,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "As above and fontSize is 20.",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         showText: true,
         fontSize: 20.0,
@@ -34,7 +34,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "As above and foregroundColor is red.",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         showText: true,
         fontSize: 20.0,
@@ -44,7 +44,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "As above and backgroundColor is yellow.\nYes, it actually scans :-)",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         showText: true,
         fontSize: 20.0,
@@ -55,7 +55,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "As above and height set to 60.0",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         showText: true,
         fontSize: 20.0,
@@ -70,7 +70,7 @@ class Barcode93Examples {
         "Large value and showing the value as text.",
         "The line width is automatically scaled down so that the barcode fits its container.",
       ].join("\n"),
-      Barcode93(
+      Code93Painter(
         data: "62733538535715976",
         showText: true,
       ),
@@ -86,7 +86,7 @@ class Barcode93Examples {
         "",
         "horizontalAlignment=left (the default)",
       ].join("\n"),
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         lineWidth: 1.0,
         showText: true,
@@ -95,7 +95,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "As above, horizontalAlignment=center",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         lineWidth: 1.0,
         showText: true,
@@ -105,7 +105,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "As above, horizontalAlignment=end",
-      Barcode93(
+      Code93Painter(
         data: "BARCODE93",
         lineWidth: 1.0,
         showText: true,
@@ -115,7 +115,7 @@ class Barcode93Examples {
     BarcodeExampleDTO(
       "Code 93",
       "The data for this example (BaRCODE93) contains a lower case character.\nThis is not valid for basic Code 93 so...\n\nbarcode.hasError = true;\n\nFor the purpose of this example, the value of barcode.lastErrorMessage is shown both on and below the canvas.\n\nHave a look at the code for BarcodePainter to see how the error is shown on the canvas.",
-      Barcode93(
+      Code93Painter(
         data: "BaRCODE93",
         backgroundColor: Colors.yellow,
       ),

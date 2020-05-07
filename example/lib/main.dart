@@ -1,14 +1,14 @@
 import 'package:barcode_painter_demo/alignment_demo.dart';
-import 'package:flutter/material.dart';
-
 import 'package:barcode_painter_demo/barcode39/barcode_39_examples.dart';
 import 'package:barcode_painter_demo/barcode93/barcode_93_examples.dart';
 import 'package:barcode_painter_demo/common/barcode_card_view.dart';
 import 'package:barcode_painter_demo/common/barcode_example_dto.dart';
 import 'package:barcode_painter_demo/common/placeholder_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
@@ -38,7 +38,8 @@ class LandingPage extends StatefulWidget {
   _MyLandingPageState createState() => _MyLandingPageState();
 }
 
-class _MyLandingPageState extends State<LandingPage> with SingleTickerProviderStateMixin {
+class _MyLandingPageState extends State<LandingPage>
+    with SingleTickerProviderStateMixin {
   TabController _controller;
 
   @override

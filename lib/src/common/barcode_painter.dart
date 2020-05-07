@@ -1,56 +1,39 @@
 import 'package:flutter/material.dart';
 
-import 'barcode.dart';
+typedef void BarcodeError(String errorMessage);
 
-/// A Widget that wraps a CustomPaint Widget that uses a Barcode object
-/// to paint its content.
+enum BarcodeAlignment { start, center, end }
+
+// enum VerticalAlignment { start, center, end }
+
+/// The base class for painting barcodes.
 ///
-/// This Widget is provided as an example of how to use the CustomPaint Widget
-/// with a Barcode object from this package.
+/// This class is abstract, while extending CustomPainter so that subclasses
+/// must implement the CustomPainter interface as well as getting the two
+/// fields that the BarcodePainter class uses to size the Container wrapping
+/// its CustomPaint widget.
 ///
-/// You can easily create your own wrapper for CustomPaint and use that instead.
-class BarcodePainter extends StatelessWidget {
-  final Barcode barcode;
-  final bool showErrors;
+/// It also indicates whether the barcode that it is going to paint
+/// has an error condition or not.
+abstract class BarcodePainter extends CustomPainter {
+  BarcodePainter({this.height});
 
-  /// Creates a Widget to use as a canvas and uses the barcode, a CustomPainter,
-  /// to paint a barcode on that canvas.
+  /// The preferred, or minimum, width of the Canvas that can fit the bars
+  /// representing the data at the line width specified (by the subclass)
   ///
-  /// The actual width and height of the canvas can be larger or smaller than
-  /// the preferredWidth and preferredHeight of the barcode.
-  /// It is completely dependant on the rendered size of its parent.
-  ///
-  /// If the canvas size is larger than the preferred size of the barcode
-  /// then the CustomPainter will align the barcode within the canvas using the
-  /// values of horizontalAlignment and verticalAlignment.
-  ///
-  /// If the canvas size is narrower than the preferred width of the barcode,
-  /// the CustomPainter will scale the line width down so that the barcode fits.
-  const BarcodePainter({Key key, @required this.barcode, this.showErrors = true}) : super(key: key);
+  /// This value is calculated by the subclass and so is only a getter.
+  double get width;
 
-  @override
-  Widget build(BuildContext context) {
-    Widget childOfPaint = Container();
-    if (showErrors && barcode.hasError) {
-      childOfPaint = Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.red, width: 4.0),
-          color: Colors.yellow,
-        ),
-        padding: EdgeInsets.all(8.0),
-        child: Text("Error: ${barcode.lastErrorMessage}"),
-      );
-    }
-    return ClipRect(
-      child: Container(
-        // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-        width: barcode.width,
-        height: barcode.height,
-        child: CustomPaint(
-          child: childOfPaint,
-          painter: barcode,
-        ),
-      ),
-    );
-  }
+  /// The preferred, or minimum, height of the barcode.
+  ///
+  /// The value of height includes the space taken by the barcode text,
+  /// if it is being shown.
+  final double height;
+
+  /// Indicates whether or not an error occurred while creating the barcode
+  /// from the data provided as a value.
+  bool get hasError;
+
+  /// A description of the most recent error encountered.
+  String get lastErrorMessage;
 }
